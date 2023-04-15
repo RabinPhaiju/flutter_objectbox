@@ -1,0 +1,80 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:967020093646934196",
+      "lastPropertyId": "3:2641664069162848168",
+      "name": "ForumPost",
+      "properties": [
+        {
+          "id": "1:1108933438528768628",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1113066729809350827",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:2641664069162848168",
+          "name": "draft",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:3161534090598324491",
+      "lastPropertyId": "4:7371925780276804914",
+      "name": "PostReply",
+      "properties": [
+        {
+          "id": "1:8459829251412716163",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "3:3952050065002741276",
+          "name": "postId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8224203062724588113",
+          "relationTarget": "ForumPost"
+        },
+        {
+          "id": "4:7371925780276804914",
+          "name": "content",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:4006193552445279488",
+          "name": "replies",
+          "targetId": "2:3161534090598324491"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "2:3161534090598324491",
+  "lastIndexId": "1:8224203062724588113",
+  "lastRelationId": "3:4006193552445279488",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    4135032994772201769
+  ],
+  "retiredRelationUids": [
+    4955803548666071923,
+    7732731541165926664
+  ],
+  "version": 1
+}
