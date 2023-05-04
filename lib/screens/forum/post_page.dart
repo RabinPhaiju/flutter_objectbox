@@ -13,8 +13,8 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  void addPost(String title){
-    objectBox.addPost(title);
+  void addPost(String title,String reply,String rel){
+    objectBox.addPost(title,rel,reply);
     // setState(() {});
   }
 

@@ -17,7 +17,7 @@ class _PostListCardState extends State<PostListCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 90,
+        height: 140,
         margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 243, 243, 243),
@@ -40,6 +40,10 @@ class _PostListCardState extends State<PostListCard> {
                     widget.post?.replies == null ?
                     Text(widget.post?.replies[0].replies.length.toString() as String):const Text('--'),
                     Text(widget.post?.replies.length.toString() as String),
+                    Text(widget.post?.replies.length.toString() as String),
+                  Text(widget.post.relationship.target != null ? widget.post.relationship.target!.title : ''),
+                  Text('id${widget.post.relationship.target != null ? widget.post.relationship.target!.id.toString() : ''}'),
+                  Text('internal_id${widget.post.relationship.target != null ? widget.post.relationship.target!.internalId.toString() : ''}'),
                   ],
                 )
             ),

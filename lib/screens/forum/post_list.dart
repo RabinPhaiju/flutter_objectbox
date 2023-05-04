@@ -13,7 +13,9 @@ class PostList extends StatefulWidget {
 class _PostListState extends State<PostList> {
 
   PostListCard Function(BuildContext,int) _itemBuilder(List<ForumPost> posts){
-    return (BuildContext context,int index) => PostListCard(post : posts[index]);
+    return (BuildContext context,int index){
+      return PostListCard(post : posts[index]);
+    };
   }
 
   @override

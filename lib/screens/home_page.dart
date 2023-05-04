@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_objectbox/screens/forum/relation_list.dart';
 
 import 'forum/post_page.dart';
 
@@ -22,7 +23,12 @@ class _HomePageState extends State<HomePage> {
               onPressed: (){
                 Navigator.push(context,MaterialPageRoute(builder:(context) => const PostPage()));
                 },
-              child: const Text('Forum'))
+              child: const Text('Forum')),
+          ElevatedButton(
+              onPressed: (){
+                Navigator.push(context,MaterialPageRoute(builder:(context) => const RelationList()));
+                },
+              child: const Text('Relationship'))
         ],
       ),
     );

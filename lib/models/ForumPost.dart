@@ -1,4 +1,6 @@
+import 'package:flutter_objectbox/models/Relationship.dart';
 import 'package:objectbox/objectbox.dart';
+
 
 import 'PostReply.dart';
 
@@ -9,6 +11,8 @@ class ForumPost {
 
   String title;
   bool draft;
+
+  final relationship = ToOne<Relationship>();
 
   @Backlink()
   final replies = ToMany<PostReply>();

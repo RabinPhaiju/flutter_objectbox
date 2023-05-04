@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'models/ForumPost.dart';
 import 'models/PostReply.dart';
+import 'models/Relationship.dart';
 import 'objectbox.g.dart';
 
 class ObjectBox{
@@ -10,10 +11,12 @@ class ObjectBox{
 
   late final Box<ForumPost> forumPostBox;
   late final Box<PostReply> postReplyBox;
+  late final Box<Relationship> relationshipBox;
 
   ObjectBox._create(this.store){
     forumPostBox = Box<ForumPost>(store);
     postReplyBox = Box<PostReply>(store);
+    relationshipBox = Box<Relationship>(store);
 
     // test
     if(forumPostBox.isEmpty()){
@@ -22,8 +25,15 @@ class ObjectBox{
   }
 
   void _putDemoPostReply() {
+    Relationship rel1 = Relationship('rel1',1);
+    Relationship rel2 = Relationship('rel2',2);
+    Relationship rel3 = Relationship('rel3',3);
+    Relationship rel4 = Relationship('rel4',4);
+
     ForumPost post1 = ForumPost('Post1');
+    post1.relationship.target = rel1;
     ForumPost post2 = ForumPost('Post12');
+    post2.relationship.target = rel2;
 
     PostReply reply1 = PostReply('reply1 of post 1');
     post1.replies.add(reply1);
@@ -39,6 +49,7 @@ class ObjectBox{
 
     // putting reply will also put if new post cause they have relation.
     forumPostBox.putMany([post1,post2]);
+    relationshipBox.putMany([rel3,rel4]);
   }
 
   static Future<ObjectBox> create() async{
@@ -54,14 +65,23 @@ class ObjectBox{
     debugPrint('Add reply ${newReply.content} of post ${newReply.post.target?.title}');
   }
 
-  int addPost(String newPost){
+  int addPost(String newPost,String rel,String reply1){
+    Relationship _rel = Relationship(rel,5);
+    PostReply _reply1 = PostReply(reply1);
     ForumPost postTOAdd = ForumPost(newPost);
+    postTOAdd.relationship.target = _rel;
+    postTOAdd.replies.add(_reply1);
+
     int newPostId = forumPostBox.put(postTOAdd);
     return newPostId;
   }
 
   Stream<List<ForumPost>> getForumPosts(){
     final builder = forumPostBox.query()..order(ForumPost_.id,flags: Order.descending);
+    return builder.watch(triggerImmediately: true).map((query) => query.find());
+  }
+  Stream<List<Relationship>> getRelations(){
+    final builder = relationshipBox.query()..order(Relationship_.id,flags: Order.descending);
     return builder.watch(triggerImmediately: true).map((query) => query.find());
   }
 
