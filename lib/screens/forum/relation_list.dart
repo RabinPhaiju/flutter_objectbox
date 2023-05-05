@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 
 class RelationList extends StatefulWidget {
-  const RelationList({Key? key}) : super(key: key);
+  final String boxType;
+  const RelationList({Key? key,required this.boxType}) : super(key: key);
 
   @override
   State<RelationList> createState() => _RelationListState();
@@ -18,7 +19,7 @@ class _RelationListState extends State<RelationList> {
       ),
       body: StreamBuilder(
         key: UniqueKey(),
-        stream: objectBox.getRelations(),
+        stream: widget.boxType == 'objectbox1' ? objectBox.getRelations() : objectBox2.getRelations(),
         builder: (context,snapshot){
           if(snapshot.data?.isNotEmpty ?? false ){
             return ListView.builder(

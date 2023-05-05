@@ -6,7 +6,8 @@ import '../../main.dart';
 import 'add_post.dart';
 
 class PostPage extends StatefulWidget {
-  const PostPage({Key? key}) : super(key: key);
+  final String boxType;
+  const PostPage({Key? key,required this.boxType}) : super(key: key);
 
   @override
   State<PostPage> createState() => _PostPageState();
@@ -14,7 +15,11 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   void addPost(String title,String reply,String rel){
-    objectBox.addPost(title,rel,reply);
+    if(widget.boxType == 'objectbox1'){
+      objectBox.addPost(title,rel,reply);
+    }else{
+      objectBox2.addPost(title,rel,reply);
+    }
     // setState(() {});
   }
 
@@ -37,7 +42,7 @@ class _PostPageState extends State<PostPage> {
       appBar: AppBar(
         title: const Text('Pocket Pandit'),
       ),
-      body: const PostList(),
+      body: PostList(boxType : widget.boxType),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Platform.isIOS? Container() :FloatingActionButton(
         onPressed: ()=>startAddNewPost(context),

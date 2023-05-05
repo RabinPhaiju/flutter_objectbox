@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -7,14 +8,14 @@ import 'models/PostReply.dart';
 import 'models/Relationship.dart';
 import 'objectbox.g.dart';
 
-class ObjectBox{
+class ObjectBox2{
   late final Store store;
 
   late final Box<ForumPost> forumPostBox;
   late final Box<PostReply> postReplyBox;
   late final Box<Relationship> relationshipBox;
 
-  ObjectBox._create(this.store){
+  ObjectBox2._create(this.store){
     forumPostBox = Box<ForumPost>(store);
     postReplyBox = Box<PostReply>(store);
     relationshipBox = Box<Relationship>(store);
@@ -53,11 +54,10 @@ class ObjectBox{
     relationshipBox.putMany([rel3,rel4]);
   }
 
-  static Future<ObjectBox> create() async{
+  static Future<ObjectBox2> create() async{
     final docsDir = await getApplicationDocumentsDirectory();
-    final store = await openStore(directory: p.join(docsDir.path, "objectbox1"));
-    return ObjectBox._create(store);
-
+    final store = await openStore(directory: p.join(docsDir.path, "objectbox2"));
+    return ObjectBox2._create(store);
   }
 
   void addPostReply(String replyText,ForumPost post){

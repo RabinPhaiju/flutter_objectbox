@@ -17,19 +17,43 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Pocket Pandit'),
       ),
-      body: Column(
-        children: <Widget>[
-          ElevatedButton(
-              onPressed: (){
-                Navigator.push(context,MaterialPageRoute(builder:(context) => const PostPage()));
-                },
-              child: const Text('Forum')),
-          ElevatedButton(
-              onPressed: (){
-                Navigator.push(context,MaterialPageRoute(builder:(context) => const RelationList()));
-                },
-              child: const Text('Relationship'))
-        ],
+      body: ListView(
+        children :[
+          Row(
+            children: <Widget>[
+              Text('box1'),
+              SizedBox(width: 10,),
+              ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(context,MaterialPageRoute(builder:(context) =>  const PostPage(boxType: 'objectbox1')));
+                  },
+                  child: const Text('Forum 1')),
+              SizedBox(width: 10,),
+              ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(context,MaterialPageRoute(builder:(context) => const RelationList(boxType: 'objectbox1')));
+                  },
+                  child: const Text('Relationship 1'))
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Text('box2'),
+              SizedBox(width: 10,),
+              ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(context,MaterialPageRoute(builder:(context) => const PostPage(boxType: 'objectbox2')));
+                  },
+                  child: const Text('Forum 2')),
+              SizedBox(width: 10,),
+              ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(context,MaterialPageRoute(builder:(context) => const RelationList(boxType: 'objectbox2')));
+                  },
+                  child: const Text('Relationship 2'))
+            ],
+          ),
+        ]
       ),
     );
   }
