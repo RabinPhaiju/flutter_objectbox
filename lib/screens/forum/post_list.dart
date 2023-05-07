@@ -15,7 +15,7 @@ class _PostListState extends State<PostList> {
 
   PostListCard Function(BuildContext,int) _itemBuilder(List<ForumPost> posts){
     return (BuildContext context,int index){
-      return PostListCard(post : posts[index]);
+      return PostListCard(post : posts[index],boxType:widget.boxType);
     };
   }
 
@@ -23,7 +23,7 @@ class _PostListState extends State<PostList> {
   Widget build(BuildContext context) {
     return StreamBuilder(
           key: UniqueKey(),
-          stream: widget.boxType=='objectbox1' ? objectBox.getForumPosts() : objectBox2.getForumPosts(),
+          stream: widget.boxType=='objectbox1' ? objectBox.getForumPosts(objectBox.forumPostBox1) : objectBox2.getForumPosts(),
           builder: (context,snapshot){
             if(snapshot.data?.isNotEmpty ?? false ){
               return ListView.builder(

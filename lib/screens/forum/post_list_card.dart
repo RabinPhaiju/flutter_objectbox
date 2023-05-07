@@ -6,7 +6,8 @@ import '../../widgets/popup_menu_button.dart';
 
 class PostListCard extends StatefulWidget {
   final ForumPost post;
-  const PostListCard({Key? key,required this.post}) : super(key: key);
+  final String boxType;
+  const PostListCard({Key? key,required this.post,required this.boxType}) : super(key: key);
 
   @override
   State<PostListCard> createState() => _PostListCardState();
@@ -47,7 +48,7 @@ class _PostListCardState extends State<PostListCard> {
                   ],
                 )
             ),
-            PocketPopupMenuButton(post: widget.post),
+            PocketPopupMenuButton(post: widget.post,boxType:widget.boxType),
           ],
         ),
     );

@@ -4,38 +4,6 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:3299664545099743597",
-      "lastPropertyId": "4:4985422426115245748",
-      "name": "ForumPost",
-      "properties": [
-        {
-          "id": "1:2345011826198097884",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:5619150353814578182",
-          "name": "title",
-          "type": 9
-        },
-        {
-          "id": "3:6434575558844629489",
-          "name": "draft",
-          "type": 1
-        },
-        {
-          "id": "4:4985422426115245748",
-          "name": "relationshipId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "1:4041671059461907796",
-          "relationTarget": "Relationship"
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "2:5850958085141326978",
       "lastPropertyId": "3:2383079849247965534",
       "name": "PostReply",
@@ -93,17 +61,86 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:6858487115518208979",
+      "lastPropertyId": "4:8965017151499962349",
+      "name": "ForumPost",
+      "properties": [
+        {
+          "id": "1:7268252579420569908",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:772905879652114741",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:235689789240017504",
+          "name": "draft",
+          "type": 1
+        },
+        {
+          "id": "4:8965017151499962349",
+          "name": "relationshipId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:5101458468576611422",
+          "relationTarget": "Relationship"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5653375999776791360",
+      "lastPropertyId": "2:6091211155337942294",
+      "name": "ForumPost1",
+      "properties": [
+        {
+          "id": "2:6091211155337942294",
+          "name": "internal_id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:6859734002408454202",
+      "lastPropertyId": "2:8095708660137862346",
+      "name": "ForumPost2",
+      "properties": [
+        {
+          "id": "2:8095708660137862346",
+          "name": "internal_id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:1323948735940516551",
-  "lastIndexId": "3:4603961470612243433",
+  "lastEntityId": "6:6859734002408454202",
+  "lastIndexId": "4:5101458468576611422",
   "lastRelationId": "1:1172234870346071889",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    3299664545099743597
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    2345011826198097884,
+    5619150353814578182,
+    6434575558844629489,
+    4985422426115245748,
+    3839080211975895819,
+    626624808667887549
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

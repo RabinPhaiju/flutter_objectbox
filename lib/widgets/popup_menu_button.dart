@@ -16,7 +16,8 @@ class MenuItems {
 
 class PocketPopupMenuButton extends StatefulWidget {
   final ForumPost post;
-  const PocketPopupMenuButton({Key? key,required this.post}) : super(key: key);
+  final String boxType;
+  const PocketPopupMenuButton({Key? key,required this.post,required this.boxType}) : super(key: key);
 
   @override
   State<PocketPopupMenuButton> createState() => _PocketPopupMenuButtonState();
@@ -28,7 +29,11 @@ class _PocketPopupMenuButtonState extends State<PocketPopupMenuButton> {
 
   void onSelected(BuildContext context, ForumPost post){
     // objectBox.forumPostBox.remove(post.id);
-    objectBox.forumPostBox.removeAsync(post.id);
+    if(widget.boxType == 'objectbox1'){
+      objectBox.forumPostBox1.removeAsync(post.id);
+    }else{
+      objectBox.forumPostBox2.removeAsync(post.id);
+    }
     setState(() {});
   }
 
