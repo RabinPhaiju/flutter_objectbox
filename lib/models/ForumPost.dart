@@ -24,19 +24,3 @@ class ForumPost {
     return draft;
   }
 }
-
-@Entity()
-class ForumPost1 extends ForumPost {
-  @Id()
-  int internal_id;
-  ForumPost1(String title,this.internal_id) : super(title);
-
-}
-
-@Entity()
-class ForumPost2 extends ForumPost {
-  @Id()
-  int internal_id;
-  ForumPost2(String title,this.internal_id) : super(title);
-
-}
