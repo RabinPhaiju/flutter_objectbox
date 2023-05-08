@@ -40,7 +40,6 @@ class _PostListCardState extends State<PostListCard> {
                     Text(widget.post.replies.length.toString()),
                   Text(widget.post.relationship.target != null ? widget.post.relationship.target!.title : ''),
                   Text('id${widget.post.relationship.target != null ? widget.post.relationship.target!.id.toString() : ''}'),
-                  Text('internal_id${widget.post.relationship.target != null ? widget.post.relationship.target!.internalId.toString() : ''}'),
                   ],
                 )
             ),

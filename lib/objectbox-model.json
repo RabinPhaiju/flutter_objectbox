@@ -76,18 +76,13 @@
         {
           "id": "1:5348850072997621402",
           "name": "id",
-          "type": 6
+          "type": 6,
+          "flags": 129
         },
         {
           "id": "2:4862993502610556094",
           "name": "title",
           "type": 9
-        },
-        {
-          "id": "3:106992363596547557",
-          "name": "internalId",
-          "type": 6,
-          "flags": 1
         }
       ],
       "relations": []
@@ -103,7 +98,9 @@
   "retiredIndexUids": [
     4603961470612243433
   ],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    106992363596547557
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

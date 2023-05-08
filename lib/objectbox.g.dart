@@ -95,20 +95,17 @@ final _entities = <ModelEntity>[
             id: const IdUid(1, 5348850072997621402),
             name: 'id',
             type: 6,
-            flags: 0),
+            flags: 129),
         ModelProperty(
             id: const IdUid(2, 4862993502610556094),
             name: 'title',
             type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 106992363596547557),
-            name: 'internalId',
-            type: 6,
-            flags: 1)
+            flags: 0)
       ],
       relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[])
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'posts', srcEntity: 'ForumPost', srcField: '')
+      ])
 ];
 
 /// Open an ObjectBox store with the model declared in this file.
@@ -137,7 +134,7 @@ ModelDefinition getObjectBoxModel() {
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [4603961470612243433],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [106992363596547557],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -222,19 +219,21 @@ ModelDefinition getObjectBoxModel() {
     Relationship: EntityDefinition<Relationship>(
         model: _entities[2],
         toOneRelations: (Relationship object) => [],
-        toManyRelations: (Relationship object) => {},
-        getId: (Relationship object) => object.internalId,
+        toManyRelations: (Relationship object) => {
+              RelInfo<ForumPost>.toOneBacklink(4, object.id,
+                  (ForumPost srcObject) => srcObject.relationship): object.posts
+            },
+        getId: (Relationship object) => object.id,
         setId: (Relationship object, int id) {
-          object.internalId = id;
+          object.id = id;
         },
         objectToFB: (Relationship object, fb.Builder fbb) {
           final titleOffset = fbb.writeString(object.title);
           fbb.startTable(4);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
-          fbb.addInt64(2, object.internalId);
           fbb.finish(fbb.endTable());
-          return object.internalId;
+          return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
@@ -243,10 +242,12 @@ ModelDefinition getObjectBoxModel() {
           final object = Relationship(
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4))
-            ..internalId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
-
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+          InternalToManyAccess.setRelInfo<Relationship>(
+              object.posts,
+              store,
+              RelInfo<ForumPost>.toOneBacklink(4, object.id,
+                  (ForumPost srcObject) => srcObject.relationship));
           return object;
         })
   };
@@ -299,8 +300,4 @@ class Relationship_ {
   /// see [Relationship.title]
   static final title =
       QueryStringProperty<Relationship>(_entities[2].properties[1]);
-
-  /// see [Relationship.internalId]
-  static final internalId =
-      QueryIntegerProperty<Relationship>(_entities[2].properties[2]);
 }

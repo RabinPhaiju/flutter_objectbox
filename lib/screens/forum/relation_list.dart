@@ -31,7 +31,6 @@ class _RelationListState extends State<RelationList> {
                     children: <Widget>[
                       Text(snapshot.data![index].title),
                       Text('id ${snapshot.data![index].id.toString()}'),
-                      Text('internal_id ${snapshot.data![index].internalId.toString()}'),
                     ],
                   )
               );

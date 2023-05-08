@@ -29,9 +29,9 @@ class _PocketPopupMenuButtonState extends State<PocketPopupMenuButton> {
   void onSelected(BuildContext context, ForumPost post){
     final removeRelationship = post.relationship.target;
     objectBox.forumPostBox.removeAsync(post.id);
-    if(removeRelationship !=null){
-      objectBox.relationshipBox.removeAsync(removeRelationship.internalId);
-    }
+    // if(removeRelationship !=null){
+    //   objectBox.relationshipBox.removeAsync(removeRelationship.id);
+    // }
 
     setState(() {});
   }

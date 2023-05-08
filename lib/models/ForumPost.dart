@@ -12,12 +12,12 @@ class ForumPost {
   String title;
   bool draft;
 
-  final relationship = ToOne<Relationship>();
+  var relationship = ToOne<Relationship>();
 
   @Backlink()
   final replies = ToMany<PostReply>();
 
-  ForumPost(this.title, this.id , {this.draft = false});
+  ForumPost(this.title, this.id, {this.draft = false});
 
   bool setPosted(){
     draft = false;
