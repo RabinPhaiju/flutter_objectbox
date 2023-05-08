@@ -6,8 +6,8 @@ import 'PostReply.dart';
 
 @Entity()
 class ForumPost {
-  @Id()
-  int id;
+  @Id(assignable: true)
+  int id= 0;
 
   String title;
   bool draft;
@@ -17,7 +17,7 @@ class ForumPost {
   @Backlink()
   final replies = ToMany<PostReply>();
 
-  ForumPost(this.title, {this.id = 0, this.draft = false});
+  ForumPost(this.title, this.id , {this.draft = false});
 
   bool setPosted(){
     draft = false;

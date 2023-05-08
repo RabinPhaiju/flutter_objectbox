@@ -14,9 +14,9 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  void addPost(String title,String reply,String rel){
+  void addPost(String id,String relId,String title,String reply,String rel){
     if(widget.boxType == 'objectbox1'){
-      objectBox.addPost(title,rel,reply);
+      objectBox.addPost(id,relId,title,rel,reply);
     }else{
       objectBox2.addPost(title,rel,reply);
     }
@@ -25,6 +25,7 @@ class _PostPageState extends State<PostPage> {
 
   startAddNewPost(BuildContext ctx){
     showModalBottomSheet(
+      isScrollControlled: true,
       useSafeArea: true,
         backgroundColor: Colors.transparent,
         context: ctx,

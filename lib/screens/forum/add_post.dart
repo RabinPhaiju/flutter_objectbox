@@ -10,6 +10,8 @@ class NewPost extends StatefulWidget {
 }
 
 class _NewPostState extends State<NewPost> {
+  final _idController = TextEditingController();
+  final _relIdController = TextEditingController();
   final _titleController = TextEditingController();
   final _replyController = TextEditingController();
   final _relationController = TextEditingController();
@@ -18,6 +20,8 @@ class _NewPostState extends State<NewPost> {
   Widget build(BuildContext context) {
 
     void submitPost(){
+      final enteredId = _idController.text;
+      final enteredRelId = _relIdController.text;
       final enteredTitle = _titleController.text;
       final enteredReply = _replyController.text;
       final enteredRelation = _relationController.text;
@@ -25,7 +29,7 @@ class _NewPostState extends State<NewPost> {
       if(enteredTitle.isEmpty){return;}
       // widget only available in stateful
       // widget is special property that gives access to the context of your Widget
-      widget.addPost(enteredTitle,enteredReply,enteredRelation);
+      widget.addPost(enteredId,enteredRelId,enteredTitle,enteredReply,enteredRelation);
       // close bottom sheet
       Navigator.of(context).pop();
     }
@@ -43,9 +47,18 @@ class _NewPostState extends State<NewPost> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              // Text(MediaQuery.of(context).viewInsets.bottom.toString()),
               TextField(
-                decoration: const InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Id'),
+                controller: _idController,
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Rel id'),
+                controller: _relIdController,
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Post'),
                 controller: _titleController,
               ),
               TextField(
@@ -62,7 +75,8 @@ class _NewPostState extends State<NewPost> {
                     submitPost();
                   },
                   child: const Text('Add')
-              )
+              ),
+              Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom))
             ],
           ),
         ),

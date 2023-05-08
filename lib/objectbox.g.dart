@@ -31,7 +31,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(1, 2345011826198097884),
             name: 'id',
             type: 6,
-            flags: 1),
+            flags: 129),
         ModelProperty(
             id: const IdUid(2, 5619150353814578182),
             name: 'title',
@@ -95,8 +95,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(1, 5348850072997621402),
             name: 'id',
             type: 6,
-            flags: 32808,
-            indexId: const IdUid(3, 4603961470612243433)),
+            flags: 0),
         ModelProperty(
             id: const IdUid(2, 4862993502610556094),
             name: 'title',
@@ -137,7 +136,7 @@ ModelDefinition getObjectBoxModel() {
       lastRelationId: const IdUid(1, 1172234870346071889),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
-      retiredIndexUids: const [],
+      retiredIndexUids: const [4603961470612243433],
       retiredPropertyUids: const [],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -174,7 +173,7 @@ ModelDefinition getObjectBoxModel() {
           final object = ForumPost(
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               draft: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 8, false));
           object.relationship.targetId =
@@ -233,9 +232,9 @@ ModelDefinition getObjectBoxModel() {
           fbb.startTable(4);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
-          fbb.addInt64(2, object.internalId ?? 0);
+          fbb.addInt64(2, object.internalId);
           fbb.finish(fbb.endTable());
-          return object.internalId ?? 0;
+          return object.internalId;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
@@ -246,7 +245,7 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4))
             ..internalId =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
 
           return object;
         })

@@ -37,10 +37,7 @@ class _PostListCardState extends State<PostListCard> {
                   children: <Widget>[
                     Text(widget.post.title),
                     Text('id ${widget.post.id.toString()}'),
-                    widget.post?.replies == null ?
-                    Text(widget.post?.replies[0].replies.length.toString() as String):const Text('--'),
-                    Text(widget.post?.replies.length.toString() as String),
-                    Text(widget.post?.replies.length.toString() as String),
+                    Text(widget.post.replies.length.toString()),
                   Text(widget.post.relationship.target != null ? widget.post.relationship.target!.title : ''),
                   Text('id${widget.post.relationship.target != null ? widget.post.relationship.target!.id.toString() : ''}'),
                   Text('internal_id${widget.post.relationship.target != null ? widget.post.relationship.target!.internalId.toString() : ''}'),

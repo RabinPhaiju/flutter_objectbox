@@ -31,9 +31,9 @@ class ObjectBox{
     Relationship rel3 = Relationship('rel3',3);
     Relationship rel4 = Relationship('rel4',4);
 
-    ForumPost post1 = ForumPost('Post1');
+    ForumPost post1 = ForumPost('Post1',1);
     post1.relationship.target = rel1;
-    ForumPost post2 = ForumPost('Post12');
+    ForumPost post2 = ForumPost('Post2',2);
     post2.relationship.target = rel2;
 
     PostReply reply1 = PostReply('reply1 of post 1');
@@ -50,7 +50,7 @@ class ObjectBox{
 
     // putting reply will also put if new post cause they have relation.
     forumPostBox.putMany([post1,post2]);
-    relationshipBox.putMany([rel3,rel4]);
+    // relationshipBox.putMany([rel3,rel4]);
   }
 
   static Future<ObjectBox> create() async{
@@ -68,10 +68,10 @@ class ObjectBox{
     debugPrint('Add reply ${newReply.content} of post ${newReply.post.target?.title}');
   }
 
-  int addPost(String newPost,String rel,String reply1){
-    Relationship _rel = Relationship(rel,5);
+  int addPost(String id,String relId,String newPost,String rel,String reply1){
+    Relationship _rel = Relationship(rel,int.parse(relId));
     PostReply _reply1 = PostReply(reply1);
-    ForumPost postTOAdd = ForumPost(newPost);
+    ForumPost postTOAdd = ForumPost(newPost,int.parse(id));
     postTOAdd.relationship.target = _rel;
     postTOAdd.replies.add(_reply1);
 

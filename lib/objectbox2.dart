@@ -32,9 +32,9 @@ class ObjectBox2{
     Relationship rel3 = Relationship('rel3',3);
     Relationship rel4 = Relationship('rel4',4);
 
-    ForumPost post1 = ForumPost('Post1');
+    ForumPost post1 = ForumPost('Post1',1);
     post1.relationship.target = rel1;
-    ForumPost post2 = ForumPost('Post12');
+    ForumPost post2 = ForumPost('Post2',2);
     post2.relationship.target = rel2;
 
     PostReply reply1 = PostReply('reply1 of post 1');
@@ -71,7 +71,7 @@ class ObjectBox2{
   int addPost(String newPost,String rel,String reply1){
     Relationship _rel = Relationship(rel,5);
     PostReply _reply1 = PostReply(reply1);
-    ForumPost postTOAdd = ForumPost(newPost);
+    ForumPost postTOAdd = ForumPost(newPost,33);
     postTOAdd.relationship.target = _rel;
     postTOAdd.replies.add(_reply1);
 
