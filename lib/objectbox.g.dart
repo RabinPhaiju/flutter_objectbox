@@ -25,7 +25,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 3299664545099743597),
       name: 'ForumPost',
-      lastPropertyId: const IdUid(5, 1780224601191409044),
+      lastPropertyId: const IdUid(7, 2392194219872622434),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -33,11 +33,6 @@ final _entities = <ModelEntity>[
             name: 'id',
             type: 6,
             flags: 129),
-        ModelProperty(
-            id: const IdUid(2, 5619150353814578182),
-            name: 'title',
-            type: 9,
-            flags: 0),
         ModelProperty(
             id: const IdUid(3, 6434575558844629489),
             name: 'draft',
@@ -56,7 +51,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(4, 1623583301815762227),
-            relationTarget: 'User')
+            relationTarget: 'User'),
+        ModelProperty(
+            id: const IdUid(7, 2392194219872622434),
+            name: 'title',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -159,7 +159,11 @@ ModelDefinition getObjectBoxModel() {
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [4603961470612243433],
-      retiredPropertyUids: const [106992363596547557],
+      retiredPropertyUids: const [
+        106992363596547557,
+        5619150353814578182,
+        331629976551076022
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -181,12 +185,12 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (ForumPost object, fb.Builder fbb) {
           final titleOffset = fbb.writeString(object.title);
-          fbb.startTable(6);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
-          fbb.addOffset(1, titleOffset);
           fbb.addBool(2, object.draft);
           fbb.addInt64(3, object.relationship.targetId);
           fbb.addInt64(4, object.user.targetId);
+          fbb.addOffset(6, titleOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -196,7 +200,7 @@ ModelDefinition getObjectBoxModel() {
 
           final object = ForumPost(
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
+                  .vTableGet(buffer, rootOffset, 16, ''),
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               draft: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 8, false));
@@ -310,21 +314,21 @@ class ForumPost_ {
   /// see [ForumPost.id]
   static final id = QueryIntegerProperty<ForumPost>(_entities[0].properties[0]);
 
-  /// see [ForumPost.title]
-  static final title =
-      QueryStringProperty<ForumPost>(_entities[0].properties[1]);
-
   /// see [ForumPost.draft]
   static final draft =
-      QueryBooleanProperty<ForumPost>(_entities[0].properties[2]);
+      QueryBooleanProperty<ForumPost>(_entities[0].properties[1]);
 
   /// see [ForumPost.relationship]
   static final relationship =
-      QueryRelationToOne<ForumPost, Relationship>(_entities[0].properties[3]);
+      QueryRelationToOne<ForumPost, Relationship>(_entities[0].properties[2]);
 
   /// see [ForumPost.user]
   static final user =
-      QueryRelationToOne<ForumPost, User>(_entities[0].properties[4]);
+      QueryRelationToOne<ForumPost, User>(_entities[0].properties[3]);
+
+  /// see [ForumPost.title]
+  static final title =
+      QueryStringProperty<ForumPost>(_entities[0].properties[4]);
 }
 
 /// [PostReply] entity fields to define ObjectBox queries.
