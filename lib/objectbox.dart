@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'models/ForumPost.dart';
 import 'models/PostReply.dart';
 import 'models/Relationship.dart';
+import 'models/User.dart';
 import 'objectbox.g.dart';
 
 class ObjectBox{
@@ -13,11 +14,13 @@ class ObjectBox{
   late final Box<ForumPost> forumPostBox;
   late final Box<PostReply> postReplyBox;
   late final Box<Relationship> relationshipBox;
+  late final Box<User> userBox;
 
   ObjectBox._create(this.store){
     forumPostBox = Box<ForumPost>(store);
     postReplyBox = Box<PostReply>(store);
     relationshipBox = Box<Relationship>(store);
+    userBox = Box<User>(store);
 
     // test
     if(forumPostBox.isEmpty()){
@@ -26,17 +29,29 @@ class ObjectBox{
   }
 
   void _putDemoPostReply() {
-    Relationship rel1 = Relationship('rel1',1);
+    // 1 forum-> relation
+    // 2 store relation first
+    // 3. store user 2nd
+    // last forum store
+
+    Relationship rel1 =  Relationship('rel1',1);
+    addIfNotExist(relationshipBox,rel1);
     Relationship rel2 = Relationship('rel2',2);
-    Relationship rel3 = Relationship('rel3',3);
-    Relationship rel4 = Relationship('rel4',4);
+    addIfNotExist(relationshipBox,rel2);
+
+    User usr1 = User('user1',1);
+    addIfNotExist(userBox,usr1);
+
+    User usr2 = User('user2',2);
+    addIfNotExist(userBox,usr2);
 
     ForumPost post1 = ForumPost('Post1',1);
-    rel1.posts.add(post1);
-    // post1.relationship.targetId = rel1.id;
+    post1.relationship.targetId = rel1.id;
+    post1.user.targetId = usr1.id;
+
     ForumPost post2 = ForumPost('Post2',2);
-    rel2.posts.add(post2);
-    // post2.relationship.targetId = rel2.id;
+    post2.relationship.targetId = rel2.id;
+    post2.user.targetId = usr2.id;
 
     PostReply reply1 = PostReply('reply1 of post 1');
     post1.replies.add(reply1);
@@ -51,15 +66,22 @@ class ObjectBox{
     reply2.replies.add(reply2Reply1);
 
     // putting reply will also put if new post cause they have relation.
-    // forumPostBox.putMany([post1,post2]);
-    relationshipBox.putMany([rel2,rel1]);
+    forumPostBox.putMany([post1,post2]);
   }
 
   static Future<ObjectBox> create() async{
     final docsDir = await getApplicationDocumentsDirectory();
     final store = await openStore(directory: p.join(docsDir.path, "objectbox1"));
     return ObjectBox._create(store);
+  }
 
+  void addIfNotExist(box,object){
+    // dont use this function for all box. use seperate.
+    final containsObject = box.contains(object.id);
+    if(containsObject == false){
+      box.put(object);
+      print('--- put ${object.id}');
+    }
   }
 
   void addPostReply(String replyText,ForumPost post){
@@ -70,18 +92,20 @@ class ObjectBox{
     debugPrint('Add reply ${newReply.content} of post ${newReply.post.target?.title}');
   }
 
-  void addPost(String id,String relId,String newPost,String rel,String reply1){
+  void addPost(String userId,String userName,String id,String relId,String newPost,String rel,String reply1){
     Relationship _rel = Relationship(rel,int.parse(relId));
+    addIfNotExist(relationshipBox,_rel);
+
+    User _user = User(userName,int.parse(userId));
+    addIfNotExist(userBox, _user);
+
     PostReply _reply1 = PostReply(reply1);
     ForumPost postTOAdd = ForumPost(newPost,int.parse(id));
-    // postTOAdd.relationship.target = _rel;
-    // postTOAdd.replies.add(_reply1);
-    //
-    // forumPostBox.put(postTOAdd);
-
+    postTOAdd.relationship.target = _rel;
+    postTOAdd.user.targetId = _user.id;
     postTOAdd.replies.add(_reply1);
-    _rel.posts.add(postTOAdd);
-    relationshipBox.put(_rel);
+
+    forumPostBox.put(postTOAdd);
   }
 
   Stream<List<ForumPost>> getForumPosts(){
@@ -90,6 +114,10 @@ class ObjectBox{
   }
   Stream<List<Relationship>> getRelations(){
     final builder = relationshipBox.query()..order(Relationship_.id,flags: Order.descending);
+    return builder.watch(triggerImmediately: true).map((query) => query.find());
+  }
+  Stream<List<User>> getUsers(){
+    final builder = userBox.query()..order(User_.id,flags: Order.descending);
     return builder.watch(triggerImmediately: true).map((query) => query.find());
   }
 

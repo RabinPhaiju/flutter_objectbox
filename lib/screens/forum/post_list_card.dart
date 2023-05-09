@@ -38,8 +38,10 @@ class _PostListCardState extends State<PostListCard> {
                     Text(widget.post.title),
                     Text('id ${widget.post.id.toString()}'),
                     Text(widget.post.replies.length.toString()),
-                  Text(widget.post.relationship.target != null ? widget.post.relationship.target!.title : ''),
-                  Text('id${widget.post.relationship.target != null ? widget.post.relationship.target!.id.toString() : ''}'),
+                    Text(widget.post.relationship.target != null ? widget.post.relationship.target!.title : ''),
+                    Text('id${widget.post.relationship.target != null ? widget.post.relationship.target!.id.toString() : ''}'),
+                    Text(widget.post.user.target != null ? widget.post.user.target!.name : ''),
+                    Text('id${widget.post.user.target != null ? widget.post.user.target!.id.toString() : ''}'),
                   ],
                 )
             ),

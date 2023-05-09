@@ -17,6 +17,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'models/ForumPost.dart';
 import 'models/PostReply.dart';
 import 'models/Relationship.dart';
+import 'models/User.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -24,7 +25,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 3299664545099743597),
       name: 'ForumPost',
-      lastPropertyId: const IdUid(4, 4985422426115245748),
+      lastPropertyId: const IdUid(5, 1780224601191409044),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -48,7 +49,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(1, 4041671059461907796),
-            relationTarget: 'Relationship')
+            relationTarget: 'Relationship'),
+        ModelProperty(
+            id: const IdUid(5, 1780224601191409044),
+            name: 'userId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(4, 1623583301815762227),
+            relationTarget: 'User')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -103,9 +111,26 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'posts', srcEntity: 'ForumPost', srcField: '')
-      ])
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(4, 3919917180800387059),
+      name: 'User',
+      lastPropertyId: const IdUid(2, 335397720613780503),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5449314584743686371),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        ModelProperty(
+            id: const IdUid(2, 335397720613780503),
+            name: 'name',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[])
 ];
 
 /// Open an ObjectBox store with the model declared in this file.
@@ -128,8 +153,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(3, 1323948735940516551),
-      lastIndexId: const IdUid(3, 4603961470612243433),
+      lastEntityId: const IdUid(4, 3919917180800387059),
+      lastIndexId: const IdUid(4, 1623583301815762227),
       lastRelationId: const IdUid(1, 1172234870346071889),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
@@ -143,7 +168,8 @@ ModelDefinition getObjectBoxModel() {
   final bindings = <Type, EntityDefinition>{
     ForumPost: EntityDefinition<ForumPost>(
         model: _entities[0],
-        toOneRelations: (ForumPost object) => [object.relationship],
+        toOneRelations: (ForumPost object) =>
+            [object.relationship, object.user],
         toManyRelations: (ForumPost object) => {
               RelInfo<PostReply>.toOneBacklink(
                       3, object.id, (PostReply srcObject) => srcObject.post):
@@ -155,11 +181,12 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (ForumPost object, fb.Builder fbb) {
           final titleOffset = fbb.writeString(object.title);
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addBool(2, object.draft);
           fbb.addInt64(3, object.relationship.targetId);
+          fbb.addInt64(4, object.user.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -176,6 +203,9 @@ ModelDefinition getObjectBoxModel() {
           object.relationship.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.relationship.attach(store);
+          object.user.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          object.user.attach(store);
           InternalToManyAccess.setRelInfo<ForumPost>(
               object.replies,
               store,
@@ -219,10 +249,7 @@ ModelDefinition getObjectBoxModel() {
     Relationship: EntityDefinition<Relationship>(
         model: _entities[2],
         toOneRelations: (Relationship object) => [],
-        toManyRelations: (Relationship object) => {
-              RelInfo<ForumPost>.toOneBacklink(4, object.id,
-                  (ForumPost srcObject) => srcObject.relationship): object.posts
-            },
+        toManyRelations: (Relationship object) => {},
         getId: (Relationship object) => object.id,
         setId: (Relationship object, int id) {
           object.id = id;
@@ -243,11 +270,34 @@ ModelDefinition getObjectBoxModel() {
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
-          InternalToManyAccess.setRelInfo<Relationship>(
-              object.posts,
-              store,
-              RelInfo<ForumPost>.toOneBacklink(4, object.id,
-                  (ForumPost srcObject) => srcObject.relationship));
+
+          return object;
+        }),
+    User: EntityDefinition<User>(
+        model: _entities[3],
+        toOneRelations: (User object) => [],
+        toManyRelations: (User object) => {},
+        getId: (User object) => object.id,
+        setId: (User object, int id) {
+          object.id = id;
+        },
+        objectToFB: (User object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = User(
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+
           return object;
         })
   };
@@ -271,6 +321,10 @@ class ForumPost_ {
   /// see [ForumPost.relationship]
   static final relationship =
       QueryRelationToOne<ForumPost, Relationship>(_entities[0].properties[3]);
+
+  /// see [ForumPost.user]
+  static final user =
+      QueryRelationToOne<ForumPost, User>(_entities[0].properties[4]);
 }
 
 /// [PostReply] entity fields to define ObjectBox queries.
@@ -300,4 +354,13 @@ class Relationship_ {
   /// see [Relationship.title]
   static final title =
       QueryStringProperty<Relationship>(_entities[2].properties[1]);
+}
+
+/// [User] entity fields to define ObjectBox queries.
+class User_ {
+  /// see [User.id]
+  static final id = QueryIntegerProperty<User>(_entities[3].properties[0]);
+
+  /// see [User.name]
+  static final name = QueryStringProperty<User>(_entities[3].properties[1]);
 }

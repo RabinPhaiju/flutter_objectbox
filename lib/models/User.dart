@@ -1,11 +1,11 @@
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Relationship {
+class User {
   @Id(assignable: true)
   int id= 0;
-  String title;
+  String name;
 
-  Relationship(this.title,this.id);
+  User(this.name,this.id);
 
 }

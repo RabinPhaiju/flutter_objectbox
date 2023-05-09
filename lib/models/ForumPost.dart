@@ -3,6 +3,7 @@ import 'package:objectbox/objectbox.dart';
 
 
 import 'PostReply.dart';
+import 'User.dart';
 
 @Entity()
 class ForumPost {
@@ -13,6 +14,7 @@ class ForumPost {
   bool draft;
 
   var relationship = ToOne<Relationship>();
+  var user = ToOne<User>();
 
   @Backlink()
   final replies = ToMany<PostReply>();

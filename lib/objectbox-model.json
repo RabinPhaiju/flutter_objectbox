@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:3299664545099743597",
-      "lastPropertyId": "4:4985422426115245748",
+      "lastPropertyId": "5:1780224601191409044",
       "name": "ForumPost",
       "properties": [
         {
@@ -31,6 +31,14 @@
           "flags": 520,
           "indexId": "1:4041671059461907796",
           "relationTarget": "Relationship"
+        },
+        {
+          "id": "5:1780224601191409044",
+          "name": "userId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:1623583301815762227",
+          "relationTarget": "User"
         }
       ],
       "relations": []
@@ -86,10 +94,29 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:3919917180800387059",
+      "lastPropertyId": "2:335397720613780503",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:5449314584743686371",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:335397720613780503",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:1323948735940516551",
-  "lastIndexId": "3:4603961470612243433",
+  "lastEntityId": "4:3919917180800387059",
+  "lastIndexId": "4:1623583301815762227",
   "lastRelationId": "1:1172234870346071889",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
