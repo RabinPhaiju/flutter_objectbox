@@ -101,7 +101,7 @@ class ObjectBox{
 
     PostReply _reply1 = PostReply(reply1);
     ForumPost postTOAdd = ForumPost(newPost,int.parse(id));
-    postTOAdd.relationship.target = _rel;
+    postTOAdd.relationship.targetId = _rel.id;
     postTOAdd.user.targetId = _user.id;
     postTOAdd.replies.add(_reply1);
 
