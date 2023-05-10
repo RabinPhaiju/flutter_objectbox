@@ -14,9 +14,9 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  void addPost(String userId,String userName,String id,String relId,String title,String reply,String rel){
+  void addPost(String price,String userId,String userName,String id,String relId,String title,String reply,String rel){
     if(widget.boxType == 'objectbox1'){
-      objectBox.addPost(userId,userName,id,relId,title,rel,reply);
+      objectBox.addPost(price,userId,userName,id,relId,title,rel,reply);
     }else{
       objectBox2.addPost(title,rel,reply);
     }

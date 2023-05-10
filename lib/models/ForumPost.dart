@@ -10,6 +10,9 @@ class ForumPost {
   @Id(assignable: true)
   int id= 0;
 
+  @Property(uid: 8039045720462395008)
+  double price;
+
   String title;
   bool draft;
 
@@ -19,7 +22,7 @@ class ForumPost {
   @Backlink()
   final replies = ToMany<PostReply>();
 
-  ForumPost(this.title, this.id, {this.draft = false});
+  ForumPost(this.title, this.id,this.price, {this.draft = false});
 
   bool setPosted(){
     draft = false;

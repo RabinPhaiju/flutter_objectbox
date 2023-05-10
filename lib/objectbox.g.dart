@@ -25,7 +25,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 3299664545099743597),
       name: 'ForumPost',
-      lastPropertyId: const IdUid(7, 2392194219872622434),
+      lastPropertyId: const IdUid(11, 8039045720462395008),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -56,6 +56,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(7, 2392194219872622434),
             name: 'title',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 8039045720462395008),
+            name: 'price',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -162,7 +167,10 @@ ModelDefinition getObjectBoxModel() {
       retiredPropertyUids: const [
         106992363596547557,
         5619150353814578182,
-        331629976551076022
+        331629976551076022,
+        1564144547375417134,
+        5732738193714631292,
+        7844260606018241901
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -185,12 +193,13 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (ForumPost object, fb.Builder fbb) {
           final titleOffset = fbb.writeString(object.title);
-          fbb.startTable(8);
+          fbb.startTable(12);
           fbb.addInt64(0, object.id);
           fbb.addBool(2, object.draft);
           fbb.addInt64(3, object.relationship.targetId);
           fbb.addInt64(4, object.user.targetId);
           fbb.addOffset(6, titleOffset);
+          fbb.addFloat64(10, object.price);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -202,6 +211,7 @@ ModelDefinition getObjectBoxModel() {
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 24, 0),
               draft: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 8, false));
           object.relationship.targetId =
@@ -329,6 +339,10 @@ class ForumPost_ {
   /// see [ForumPost.title]
   static final title =
       QueryStringProperty<ForumPost>(_entities[0].properties[4]);
+
+  /// see [ForumPost.price]
+  static final price =
+      QueryDoubleProperty<ForumPost>(_entities[0].properties[5]);
 }
 
 /// [PostReply] entity fields to define ObjectBox queries.

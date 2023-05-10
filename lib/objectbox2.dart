@@ -41,11 +41,11 @@ class ObjectBox2{
     User usr2 = User('user2',2);
     userBox.putMany([usr1,usr2]);
 
-    ForumPost post1 = ForumPost('Post1',1);
+    ForumPost post1 = ForumPost('Post1',1,100);
     post1.relationship.targetId = rel1.id;
     post1.user.targetId = usr1.id;
 
-    ForumPost post2 = ForumPost('Post2',2);
+    ForumPost post2 = ForumPost('Post2',2,200);
     post2.relationship.targetId = rel2.id;
     post2.user.targetId = usr2.id;
 
@@ -84,7 +84,7 @@ class ObjectBox2{
     Relationship _rel = Relationship(rel,5);
     relationshipBox.put(_rel);
     PostReply _reply1 = PostReply(reply1);
-    ForumPost postTOAdd = ForumPost(newPost,33);
+    ForumPost postTOAdd = ForumPost(newPost,33,300);
     postTOAdd.relationship.targetId = _rel.id;
     postTOAdd.replies.add(_reply1);
 

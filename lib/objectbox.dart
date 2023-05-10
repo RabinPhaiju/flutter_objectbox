@@ -45,11 +45,11 @@ class ObjectBox{
     User usr2 = User('user2',2);
     addIfNotExist(userBox,usr2);
 
-    ForumPost post1 = ForumPost('Post1',1);
+    ForumPost post1 = ForumPost('Post1',1,100);
     post1.relationship.targetId = rel1.id;
     post1.user.targetId = usr1.id;
 
-    ForumPost post2 = ForumPost('Post2',2);
+    ForumPost post2 = ForumPost('Post2',2,200);
     post2.relationship.targetId = rel2.id;
     post2.user.targetId = usr2.id;
 
@@ -72,6 +72,7 @@ class ObjectBox{
   static Future<ObjectBox> create() async{
     final docsDir = await getApplicationDocumentsDirectory();
     final store = await openStore(directory: p.join(docsDir.path, "objectbox1"));
+    // Check if migration is required
     return ObjectBox._create(store);
   }
 
@@ -92,7 +93,7 @@ class ObjectBox{
     debugPrint('Add reply ${newReply.content} of post ${newReply.post.target?.title}');
   }
 
-  void addPost(String userId,String userName,String id,String relId,String newPost,String rel,String reply1){
+  void addPost(String price,String userId,String userName,String id,String relId,String newPost,String rel,String reply1){
     Relationship _rel = Relationship(rel,int.parse(relId));
     addIfNotExist(relationshipBox,_rel);
 
@@ -100,10 +101,11 @@ class ObjectBox{
     addIfNotExist(userBox, _user);
 
     PostReply _reply1 = PostReply(reply1);
-    ForumPost postTOAdd = ForumPost(newPost,int.parse(id));
+    ForumPost postTOAdd = ForumPost(newPost,int.parse(id),300);
     postTOAdd.relationship.targetId = _rel.id;
     postTOAdd.user.targetId = _user.id;
     postTOAdd.replies.add(_reply1);
+    postTOAdd.price = double.parse(price);
 
     forumPostBox.put(postTOAdd);
   }
@@ -126,6 +128,4 @@ class ObjectBox{
     return builder.watch(triggerImmediately: true).map((query) => query.find());
   }
 
-
 }
-

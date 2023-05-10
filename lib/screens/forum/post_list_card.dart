@@ -42,6 +42,7 @@ class _PostListCardState extends State<PostListCard> {
                     Text('id${widget.post.relationship.target != null ? widget.post.relationship.target!.id.toString() : ''}'),
                     Text(widget.post.user.target != null ? widget.post.user.target!.name : ''),
                     Text('id${widget.post.user.target != null ? widget.post.user.target!.id.toString() : ''}'),
+                    Text('price ${widget.post.price.toString()}'),
                   ],
                 )
             ),

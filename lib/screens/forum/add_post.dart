@@ -17,6 +17,7 @@ class _NewPostState extends State<NewPost> {
   final _titleController = TextEditingController();
   final _replyController = TextEditingController();
   final _relationController = TextEditingController();
+  final _priceController = TextEditingController();
 
   void submitPost(){
     final enteredUserId = _userIdController.text;
@@ -26,11 +27,12 @@ class _NewPostState extends State<NewPost> {
     final enteredTitle = _titleController.text;
     final enteredReply = _replyController.text;
     final enteredRelation = _relationController.text;
+    final enteredPrice = _priceController.text;
 
     if(enteredTitle.isEmpty){return;}
     // widget only available in stateful
     // widget is special property that gives access to the context of your Widget
-    widget.addPost(enteredUserId,enteredUserName,enteredId,enteredRelId,enteredTitle,enteredReply,enteredRelation);
+    widget.addPost(enteredPrice,enteredUserId,enteredUserName,enteredId,enteredRelId,enteredTitle,enteredReply,enteredRelation);
     // close bottom sheet
     Navigator.of(context).pop();
   }
@@ -70,6 +72,11 @@ class _NewPostState extends State<NewPost> {
               TextField(
                 decoration: const InputDecoration(labelText: 'Post'),
                 controller: _titleController,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Price'),
+                controller: _priceController,
+                keyboardType: TextInputType.number,
               ),
               TextField(
                 decoration: const InputDecoration(labelText: 'Rel id'),
